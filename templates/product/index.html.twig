@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Productos{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; width: 85%; font: 15px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 2px; }
+    .center-tittle{ text-align: center; }
+    .inline{display:inline;}
+
+</style>
+
+<div class="example-wrapper">
+    <div class="center-tittle bg-dark text-white">
+        <h1>{{ controller_name }}</h1>
+    </div>
+    {% for message in app.flashes('msg') %}
+        <div class="alert alert-success">
+            {{ message }}
+
+        </div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <div id="text_code">
+                {{ form_row(form.code_product) }}
+            </div>
+
+        </div>
+        <div class="col-2">
+            <div id="text_name">
+                {{ form_row(form.name_product) }}
+            </div>
+        </div>
+        <div class="col-2">
+            <div id="text_description">
+                {{ form_row(form.description_product) }}
+            </div>
+        </div>
+        <div class="col-2">
+            <div id="text_category" >
+                {{ form_row(form.category) }}
+            </div>
+        </div>
+        <div class="col-2">
+            <div id="text_brand" >
+                {{ form_row(form.brand) }}
+            </div>
+        </div>
+        <div class="col-2">
+            <div id="text_price" >
+                {{ form_row(form.price) }}
+            </div>
+    </div>
+    <div class="row">
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-1">
+            <div id="btn_modify">
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col">
+            <a href="{{ path('category') }}" class="btn btn-primary" >Ir a Categorias</a>
+        </div>
+    </div>
+
+
+
+    <hr>
+
+    {# total items count #}
+    <div class="count">
+        {#{{ pagination.getTotalItemCount }}#}
+    </div>
+    <table id="category" class="table">
+        <tr>
+
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'Id', 'p.id') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'Codigo', 'p.code_product') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'Nombre', 'p.name_product') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'Descripcion', 'p.description_product') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'Categoria', 'c.name_category') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'Marca', 'p.brand') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(pagination, 'Precio', 'p.price') }}</th>
+            <th scope="col"></th>
+        </tr>
+
+        {# table body #}
+        {% for item in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ item.id }}</td>
+                <td>{{ item.code_product }}</td>
+                <td data-editable="true">{{ item.name_product }}</td>
+                <td>{{ item.description_product }}</td>
+                <td>{{ item.name_category }}</td>
+                <td>{{ item.brand }}</td>
+                <td>{{ item.price }}</td>
+                <td><a href="" class="btn btn-success" onclick="Modify({{ item.id }}); return false;">Modificar</a>
+                    <a href="" class="btn btn-danger" onclick="Delete({{ item.id }});">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/product.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+{% endblock %}
