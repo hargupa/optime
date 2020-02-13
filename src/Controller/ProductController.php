@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/product", name="product")
+     * @Route("/", name="product")
      */
     public function index(Request $request,PaginatorInterface $paginator )
     {
@@ -118,21 +118,6 @@ class ProductController extends AbstractController
         $query = $entityManager->getRepository(Product::class)->find($id);
         return new JsonResponse(['name'=>$query->getNameProduct(),'code'=>$query->getCodeProduct(),'description'=>$query->getDescriptionProduct(),'brand'=>$query->getBrand(),'price'=>$query->getPrice(),'category'=>$query->getCategory()]);
     }
-    /**
-     * @Route("/LoadCategory",options={"expose"=true},name="LoadCategory")
-     */
-    public function LoadCategory(Request $request){
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $query = $entityManager->getRepository(Product::class)->find();
-        $categorias = $query->getArrayResult();
-
-        $response = new Response(json_encode($categorias));
-        //$response->headers->set('Content-Type', 'application/json');
-        $response->getHeader('Content-Type', 'application/json');
-    }
-
-
     /**
      * @Route("/SaveModifyProd",options={"expose"=true},name="SaveModifyProd")
      */

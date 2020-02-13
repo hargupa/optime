@@ -35,30 +35,6 @@ function Modify(id){
             document.getElementById("btn_modify").innerHTML='<br><a href="" class="btn btn-success" onclick="Save('+id+'); ">Modificar</a>';
         }
     })
-    path_file=Routing.generate('LoadCategory');
-    $.ajax({
-        type:'POST',
-        url:path_file,
-        data:({id:id}),
-        async:true,
-        dataType:"json",
-        success: function (data) {
-            console.log(data);
-
-            for (var clave in data){
-                // Controlando que json realmente tenga esa propiedad
-                if (data.hasOwnProperty(clave)) {
-                    // Mostrando en pantalla la clave junto a su valor
-                    if (clave=='name'){
-                        alert("La clave es " + clave+ " y el valor es " + data[clave]);
-                    }
-
-                }
-            }
-
-
-        }
-    })
 
 
 
